@@ -125,7 +125,8 @@ public class CarouselController {
         setBackgroundBitmap(mBackgroundBitmap);
         setDetailLineBitmap(mDefaultLineBitmap);
         setStartAngle(mStartAngle);
-        setCarouselRotationAngle(mCarouselRotationAngle);
+     //   setCarouselRotationAngle(mCarouselRotationAngle);
+        setCarouselRotationAngle(mSlotCount/4);
         setRadius(mRadius);
         setCardRotation(mCardRotation);
         setCardsFaceTangent(mCardsFaceTangent);
