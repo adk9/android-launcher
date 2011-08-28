@@ -127,7 +127,6 @@ public class CarouselController {
         setStartAngle(mStartAngle);
         setCarouselRotationAngle(mCarouselRotationAngle);
         //setCarouselRotationAngle(mSlotCount/4);
-      
         setRadius(mRadius);
         setCardRotation(mCardRotation);
         setCardsFaceTangent(mCardsFaceTangent);
