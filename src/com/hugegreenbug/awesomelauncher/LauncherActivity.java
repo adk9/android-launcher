@@ -48,7 +48,6 @@ public class LauncherActivity extends Activity {
     private static final int TEXTURE_HEIGHT = 100;
     private static final int TEXTURE_WIDTH = 100;
     private static final int SLOTS_VISIBLE = 10;
-
     protected static final boolean DBG = false;
     private static final int DETAIL_TEXTURE_WIDTH = 200;
     private static final int DETAIL_TEXTURE_HEIGHT = 80;
