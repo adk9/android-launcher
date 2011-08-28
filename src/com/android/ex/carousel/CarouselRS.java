@@ -32,7 +32,7 @@ import android.util.Log;
 public class CarouselRS  {
     private static final int DEFAULT_VISIBLE_SLOTS = 1;
     private static final int DEFAULT_CARD_COUNT = 0;
-    private static final int DEFAULT_ROW_COUNT = 1;
+    private static final int DEFAULT_ROW_COUNT = 3;
 
     // Client messages *** THIS LIST MUST MATCH THOSE IN carousel.rs ***
     public static final int CMD_CARD_SELECTED = 100;
@@ -81,7 +81,7 @@ public class CarouselRS  {
     private int mRowCount;
     private int mPrefetchCardCount;
     private CarouselCallback mCallback;
-    private float[] mEyePoint = new float[] { 2.0f, 0.0f, 0.0f };
+    private float[] mEyePoint = new float[] { 0.0f, 0.0f, 0.0f };
     private float[] mAtPoint = new float[] { 0.0f, 0.0f, 0.0f };
     private float[] mUp = new float[] { 0.0f, 1.0f, 0.0f };
 

@@ -35,11 +35,11 @@ import android.util.Log;
  */
 public class CarouselController {
     private final int DEFAULT_SLOT_COUNT = 10;
-    private final float DEFAULT_RADIUS = 22.0f;
+    private final float DEFAULT_RADIUS = 15.0f;
     private final int DEFAULT_VISIBLE_DETAIL_COUNT = 0;
     private final int DEFAULT_PREFETCH_CARD_COUNT = 2;
-    private final int DEFAULT_ROW_COUNT = 3;
-    private final float DEFAULT_ROW_SPACING = 0.0f;
+    private final int DEFAULT_ROW_COUNT = 4;
+    private final float DEFAULT_ROW_SPACING = 0.2f;
     private final float DEFAULT_SWAY_SENSITIVITY = 0.0f;
     private final float DEFAULT_FRICTION_COEFFICIENT = 10.0f;
     private final float DEFAULT_DRAG_FACTOR = 0.25f;
@@ -78,8 +78,8 @@ public class CarouselController {
     private int mSlotCount = DEFAULT_SLOT_COUNT;
     private int mRowCount = DEFAULT_ROW_COUNT;
     private float mRowSpacing = DEFAULT_ROW_SPACING;
-    private float mEye[] = { 20.6829f, 2.77081f, 16.7314f };
-    private float mAt[] = { 14.7255f, -3.40001f, -1.30184f };
+    private float mEye[] = { 0.0f, 0.0f, 1.0f };
+    private float mAt[] = { 0.0f, 0.0f, 0.0f };
     private float mUp[] = { 0.0f, 1.0f, 0.0f };
     private Float4 mBackgroundColor = new Float4(0.0f, 0.0f, 0.0f, 1.0f);
     private CarouselCallback mCarouselCallback;
@@ -89,7 +89,7 @@ public class CarouselController {
     private Bitmap mDetailLoadingBitmap = Bitmap.createBitmap(
             new int[] {0}, 0, 1, 1, 1, Bitmap.Config.ARGB_4444);
     private int mDragModel = CarouselRS.DRAG_MODEL_SCREEN_DELTA;
-    private int mFillDirection = CarouselRS.FILL_DIRECTION_CCW;
+    private int mFillDirection = CarouselRS.FILL_DIRECTION_CW;
     private boolean mFirstCardTop = false;
     private int[] mStoreConfigs;
 
@@ -126,6 +126,8 @@ public class CarouselController {
         setDetailLineBitmap(mDefaultLineBitmap);
         setStartAngle(mStartAngle);
         setCarouselRotationAngle(mCarouselRotationAngle);
+        //setCarouselRotationAngle(mSlotCount/4);
+      
         setRadius(mRadius);
         setCardRotation(mCardRotation);
         setCardsFaceTangent(mCardsFaceTangent);

@@ -45,14 +45,15 @@ public class LauncherActivity extends Activity {
     private static final String TAG = "LauncherActivity";
     private static final int CARD_SLOTS = 56;
     private static final int TOTAL_CARDS = 100;
-    private static final int TEXTURE_HEIGHT = 256;
-    private static final int TEXTURE_WIDTH = 256;
-    private static final int SLOTS_VISIBLE = 20;
+    private static final int TEXTURE_HEIGHT = 100;
+    private static final int TEXTURE_WIDTH = 100;
+    private static final int SLOTS_VISIBLE = 10;
 
     protected static final boolean DBG = false;
     private static final int DETAIL_TEXTURE_WIDTH = 200;
     private static final int DETAIL_TEXTURE_HEIGHT = 80;
     private static final int VISIBLE_DETAIL_COUNT = 3;
+    private static final int ICON_SIZE = 48;
     private static boolean INCREMENTAL_ADD = false; // To debug incrementally adding cards
     private CarouselView mView;
     private Paint mPaint = new Paint();
@@ -62,7 +63,7 @@ public class LauncherActivity extends Activity {
     private ArrayList<ApplicationInfo> mApplications;
     
     class LocalCarouselViewHelper extends CarouselViewHelper {
-        private static final int PIXEL_BORDER = 64;
+        private static final int PIXEL_BORDER = 0;
         private DetailTextureParameters mDetailTextureParameters
                 = new DetailTextureParameters(5.0f, 5.0f, 3.0f, 10.0f);
 
@@ -102,22 +103,34 @@ public class LauncherActivity extends Activity {
             canvas.drawARGB(0, 0, 0, 0);
             mPaint.setColor(0x00808080);
             canvas.drawRect(2, 2, TEXTURE_WIDTH-2, TEXTURE_HEIGHT-2, mPaint);
-            mPaint.setTextSize(18.0f);
+            mPaint.setTextSize(12.0f);
             mPaint.setAntiAlias(true);
             mPaint.setColor(0xffffffff);
-           
             if (mApplications == null || mApplications.size() < n + 1)
             	canvas.drawBitmap(mGlossyOverlay, null,
             			new Rect(PIXEL_BORDER, PIXEL_BORDER,
             					TEXTURE_WIDTH - PIXEL_BORDER, TEXTURE_HEIGHT - PIXEL_BORDER), mPaint);
             else {
-                canvas.drawText(mApplications.get(n).title.toString(), PIXEL_BORDER, TEXTURE_HEIGHT-10, mPaint);
+                float textWidth = Math.max(0.0f, (TEXTURE_WIDTH - 
+                		mPaint.measureText(mApplications.get(n).title.toString()))/2.0f);
+            	canvas.drawText(mApplications.get(n).title.toString(), textWidth, TEXTURE_HEIGHT - 4, mPaint);
             	Drawable d = mApplications.get(n).icon;
             	Bitmap icon = ((BitmapDrawable) d).getBitmap();
+            	Bitmap scaledIcon;
+            	if (icon.getWidth() != ICON_SIZE || icon.getHeight() != ICON_SIZE) {
+            		scaledIcon = Bitmap.createScaledBitmap(icon, ICON_SIZE, ICON_SIZE, true);
+            	} else 
+            		scaledIcon = icon;
 
-            	canvas.drawBitmap(icon, null,
-            			new Rect(PIXEL_BORDER, PIXEL_BORDER,
-            					TEXTURE_WIDTH - PIXEL_BORDER, TEXTURE_HEIGHT - PIXEL_BORDER), mPaint);
+            	canvas.drawBitmap(scaledIcon, null,
+            			new Rect((TEXTURE_WIDTH - scaledIcon.getWidth())/2, (TEXTURE_HEIGHT - scaledIcon.getHeight())/2,
+            					(TEXTURE_WIDTH - scaledIcon.getWidth())/2 + scaledIcon.getWidth(), 
+            					(TEXTURE_HEIGHT - scaledIcon.getHeight())/2 + scaledIcon.getHeight()), 
+            					mPaint);
+            	
+            	if (icon != scaledIcon)
+            		scaledIcon.recycle();
+
             }
             
             return bitmap;
@@ -178,23 +191,29 @@ public class LauncherActivity extends Activity {
 
         mHelper = new LocalCarouselViewHelper(this);
         mHelper.setCarouselView(mView);
-        mView.setSlotCount(CARD_SLOTS);
+        mView.setSlotCount(mApplications.size()/3);
         mView.createCards(INCREMENTAL_ADD ? 1: mApplications.size());
-        mView.setVisibleSlots(SLOTS_VISIBLE);
-        mView.setStartAngle((float) -(2.0f*Math.PI * 5 / CARD_SLOTS));
+        mView.setVisibleSlots(10);
+       // float angle = Math.max(0.0f, wedgeAngle(mApplications.size() - VISIBLE_DETAIL_COUNT, 
+       // 		mApplications.size()/4));
+        mView.setStartAngle(-4.2f);
         mBorder = BitmapFactory.decodeResource(res, R.drawable.border);
         mView.setDefaultBitmap(mBorder);
         mView.setLoadingBitmap(mBorder);
         mView.setBackgroundColor(0.25f, 0.25f, 0.5f, 1.0f);
         mView.setRezInCardCount(3.0f);
         mView.setFadeInDuration(250);
-        mView.setVisibleDetails(0);
-        mView.setDragModel(CarouselView.DRAG_MODEL_PLANE);
+        mView.setVisibleDetails(5);
+        mView.setDragModel(CarouselView.DRAG_MODEL_CYLINDER_INSIDE);
         if (INCREMENTAL_ADD) {
             mView.postDelayed(mAddCardRunnable, 2000);
         }
 
         mGlossyOverlay = BitmapFactory.decodeResource(res, R.drawable.glossy_overlay);
+    }
+
+    private float wedgeAngle(float slots, float slotCount) {
+        return (float) ((slots * 2.0f * Math.PI) / slotCount);
     }
 
     private void loadApps(boolean isLaunching) {

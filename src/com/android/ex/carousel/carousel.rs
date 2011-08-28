@@ -298,7 +298,7 @@ void init() {
     cardAllocationValid = false;
     programStoresAllocationValid = false;
     cardCount = 0;
-    rowCount = 5;
+    rowCount = 3;
     rowSpacing = 0.0f;
     firstCardTop = false;
     fadeInDuration = 250;
@@ -1225,7 +1225,7 @@ void doMotion(float x, float y, long eventTime)
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 static int64_t autoscrollStartTime = 0L; //tracks when we actually started interpolating
 static int64_t autoscrollDuration = 0L;  //in milli seconds
-static int autoscrollInterpolationMode = INTERPOLATION_LINEAR;
+static int autoscrollInterpolationMode = INTERPOLATION_DECELERATE_QUADRATIC;
 
 static float autoscrollStopAngle = 0.0f;
 static float autoscrollStartAngle = 0.0f;
