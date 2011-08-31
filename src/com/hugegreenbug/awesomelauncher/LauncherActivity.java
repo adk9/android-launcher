@@ -48,6 +48,7 @@ public class LauncherActivity extends Activity {
     private static final int TEXTURE_HEIGHT = 100;
     private static final int TEXTURE_WIDTH = 100;
     private static final int SLOTS_VISIBLE = 10;
+
     protected static final boolean DBG = false;
     private static final int DETAIL_TEXTURE_WIDTH = 200;
     private static final int DETAIL_TEXTURE_HEIGHT = 80;
@@ -104,6 +105,7 @@ public class LauncherActivity extends Activity {
             canvas.drawRect(2, 2, TEXTURE_WIDTH-2, TEXTURE_HEIGHT-2, mPaint);
             mPaint.setTextSize(12.0f);
             mPaint.setAntiAlias(true);
+            mPaint.setDither(false);
             mPaint.setColor(0xffffffff);
             if (mApplications == null || mApplications.size() < n + 1)
             	canvas.drawBitmap(mGlossyOverlay, null,
@@ -190,9 +192,9 @@ public class LauncherActivity extends Activity {
 
         mHelper = new LocalCarouselViewHelper(this);
         mHelper.setCarouselView(mView);
-        mView.setSlotCount(mApplications.size()/3);
+        mView.setSlotCount(mApplications.size()/2);
         mView.createCards(INCREMENTAL_ADD ? 1: mApplications.size());
-        mView.setVisibleSlots(10);
+        mView.setVisibleSlots(5);
        // float angle = Math.max(0.0f, wedgeAngle(mApplications.size() - VISIBLE_DETAIL_COUNT, 
        // 		mApplications.size()/4));
         mView.setStartAngle(-4.2f);

@@ -35,7 +35,7 @@ import android.util.Log;
  */
 public class CarouselController {
     private final int DEFAULT_SLOT_COUNT = 10;
-    private final float DEFAULT_RADIUS = 15.0f;
+    private final float DEFAULT_RADIUS = 14.0f;
     private final int DEFAULT_VISIBLE_DETAIL_COUNT = 0;
     private final int DEFAULT_PREFETCH_CARD_COUNT = 2;
     private final int DEFAULT_ROW_COUNT = 4;
@@ -127,6 +127,7 @@ public class CarouselController {
         setStartAngle(mStartAngle);
         setCarouselRotationAngle(mCarouselRotationAngle);
         //setCarouselRotationAngle(mSlotCount/4);
+      
         setRadius(mRadius);
         setCardRotation(mCardRotation);
         setCardsFaceTangent(mCardsFaceTangent);
