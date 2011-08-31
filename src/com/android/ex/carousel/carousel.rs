@@ -263,7 +263,7 @@ static PerspectiveCamera camera = {
         {2,2,2}, // from
         {0,0,0}, // at
         {0,1,0}, // up
-        50.0f,   // field of view
+        45.0f,   // field of view
         1.0f,    // aspect
         0.1f,    // near
         100.0f   // far
