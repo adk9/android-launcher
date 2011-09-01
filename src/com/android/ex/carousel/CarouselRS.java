@@ -291,6 +291,10 @@ public class CarouselRS  {
         mScript.invoke_lookAt(eye[0], eye[1], eye[2], at[0], at[1], at[2], up[0], up[1], up[2]);
     }
 
+    public void setFov(float fov) {
+    	mScript.invoke_setFov(fov);
+    }
+    
     public void setRadius(float radius) {
         mScript.invoke_setRadius(radius);
     }

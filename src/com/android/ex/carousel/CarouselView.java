@@ -533,6 +533,15 @@ public abstract class CarouselView extends RSSurfaceView {
     }
 
     /**
+     * This sets the camera field of view.
+     *
+     * @param fov 0.0f - 100.0f.
+     */
+    public void setFov(float fov) {
+    	mController.setFov(fov);
+    }
+    
+    /**
      * This sets the duration (in ms) that a card takes to fade in when loaded via a call
      * to {@link CarouselView#setTextureForItem(int, Bitmap)}. The timer starts the
      * moment {@link CarouselView#setTextureForItem(int, Bitmap)} is called and continues

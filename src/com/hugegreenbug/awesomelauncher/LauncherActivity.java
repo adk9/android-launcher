@@ -27,6 +27,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -37,6 +38,9 @@ import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.Display;
+import android.view.Surface;
+import android.view.WindowManager;
 
 import com.android.ex.carousel.CarouselView;
 import com.android.ex.carousel.CarouselViewHelper;
@@ -192,11 +196,9 @@ public class LauncherActivity extends Activity {
 
         mHelper = new LocalCarouselViewHelper(this);
         mHelper.setCarouselView(mView);
-        mView.setSlotCount(mApplications.size()/2);
+        Display display = ((WindowManager) getSystemService(WINDOW_SERVICE)).getDefaultDisplay();
+        setOrientation(display.getRotation());
         mView.createCards(INCREMENTAL_ADD ? 1: mApplications.size());
-        mView.setVisibleSlots(5);
-       // float angle = Math.max(0.0f, wedgeAngle(mApplications.size() - VISIBLE_DETAIL_COUNT, 
-       // 		mApplications.size()/4));
         mView.setStartAngle(-4.2f);
         mBorder = BitmapFactory.decodeResource(res, R.drawable.border);
         mView.setDefaultBitmap(mBorder);
@@ -204,7 +206,6 @@ public class LauncherActivity extends Activity {
         mView.setBackgroundColor(0.25f, 0.25f, 0.5f, 1.0f);
         mView.setRezInCardCount(3.0f);
         mView.setFadeInDuration(250);
-        mView.setVisibleDetails(5);
         mView.setDragModel(CarouselView.DRAG_MODEL_CYLINDER_INSIDE);
         if (INCREMENTAL_ADD) {
             mView.postDelayed(mAddCardRunnable, 2000);
@@ -213,6 +214,34 @@ public class LauncherActivity extends Activity {
         mGlossyOverlay = BitmapFactory.decodeResource(res, R.drawable.glossy_overlay);
     }
 
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) 
+        	setOrientation(Surface.ROTATION_90);
+        else
+        	setOrientation(Surface.ROTATION_0);
+    }
+    
+    private void setOrientation(int orientation) {
+    	if (orientation == Surface.ROTATION_90 || orientation == Surface.ROTATION_270) {
+    		mView.setSlotCount(mApplications.size()/4);
+    		mView.setVisibleSlots(4);
+    		mView.setVisibleDetails((int) Math.floor(mApplications.size()/(4 * 4)));
+    		mView.setRadius(10.0f);
+    		mView.setRowCount(8);
+    		mView.setFov(90.0f);
+    	} else if (orientation == Surface.ROTATION_0 || orientation == Surface.ROTATION_180) {
+    		mView.setSlotCount(mApplications.size()/2);
+    		mView.setVisibleSlots(5);
+    		mView.setVisibleDetails((int) Math.floor(mApplications.size()/(2 * 5)));
+    		mView.setRadius(14.0f);
+    		mView.setRowCount(4);
+    		mView.setFov(45.0f);
+    	}
+
+    }
+    
     private float wedgeAngle(float slots, float slotCount) {
         return (float) ((slots * 2.0f * Math.PI) / slotCount);
     }

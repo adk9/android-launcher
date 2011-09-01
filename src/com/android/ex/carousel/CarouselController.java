@@ -710,6 +710,11 @@ public class CarouselController {
         }
     }
 
+    public void setFov(float fov) {
+    	if (mRenderScript != null)
+    		mRenderScript.setFov(fov);
+    }
+    
     /**
      * This sets the number of cards in the distance that will be shown "rezzing in".
      * These alpha values will be faded in from the background to the foreground over
