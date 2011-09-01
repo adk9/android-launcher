@@ -442,6 +442,11 @@ void lookAt(float fromX, float fromY, float fromZ,
     updateCamera = true;
 }
 
+void setFov(float fov) {
+	camera.fov = fov;
+	updateCamera = true;
+}
+
 // Load a projection matrix for the given parameters.  This is equivalent to gluPerspective()
 static void loadPerspectiveMatrix(rs_matrix4x4* matrix, float fovy, float aspect, float near, float far)
 {
