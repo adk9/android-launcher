@@ -227,14 +227,14 @@ public class LauncherActivity extends Activity {
     	if (orientation == Surface.ROTATION_90 || orientation == Surface.ROTATION_270) {
     		mView.setSlotCount(mApplications.size()/4);
     		mView.setVisibleSlots(4);
-    		mView.setVisibleDetails((int) Math.floor(mApplications.size()/(4 * 4)));
+    		mView.setVisibleDetails(4);
     		mView.setRadius(10.0f);
     		mView.setRowCount(8);
     		mView.setFov(90.0f);
     	} else if (orientation == Surface.ROTATION_0 || orientation == Surface.ROTATION_180) {
     		mView.setSlotCount(mApplications.size()/2);
     		mView.setVisibleSlots(5);
-    		mView.setVisibleDetails((int) Math.floor(mApplications.size()/(2 * 5)));
+    		mView.setVisibleDetails(7);
     		mView.setRadius(14.0f);
     		mView.setRowCount(4);
     		mView.setFov(45.0f);
